@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+
 $LOAD_PATH.unshift File.dirname(__FILE__)
 require 'smtpapi/version'
 require 'json'
@@ -117,13 +118,13 @@ module Smtpapi
     def to_array
       data = {}
 
-      headers = ['to', 'sub', 'section', 'unique_args', 'category', 'filters', 'ip_pool']
+      headers = %w[to sub section unique_args category filters ip_pool]
       headers.each do |header|
         data[header] = instance_variable_get("@#{header}")
       end
 
-      data['send_at'] = @send_at&.to_i
-      data['asm_group_id'] = @asm_group_id&.to_i
+      data['send_at'] = @send_at && @send_at.to_i
+      data['asm_group_id'] = @asm_group_id && @asm_group_id.to_i
       data['send_each_at'] = @send_each_at.map(&:to_i)
 
       data.reject { |_, val| valid_value?(val) }
@@ -135,7 +136,7 @@ module Smtpapi
       escape_unicode(to_array.to_json)
     end
 
-    alias :to_json :json_string
+    alias to_json json_string
 
     def escape_unicode(str)
       str.unpack('U*').map { |i| format_char(i) }.join
@@ -163,7 +164,7 @@ module Smtpapi
     end
 
     def valid_value?(val)
-      val.nil? || ( !val.is_a?(Fixnum) && val.empty? )
+      val.nil? || (!val.is_a?(Integer) && val.empty?)
     end
   end
 end
