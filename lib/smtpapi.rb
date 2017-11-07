@@ -116,21 +116,17 @@ module Smtpapi
 
     def to_array
       data = {}
-      data['to'] = @to if @to.length > 0
-      data['sub'] = @sub if @sub.length > 0
-      data['section'] = @section if @section.length > 0
-      data['unique_args'] = @unique_args if @unique_args.length > 0
-      data['category'] = @category if @category.length > 0
-      data['filters'] = @filters if @filters.length > 0
-      data['send_at'] = @send_at.to_i unless @send_at.nil?
-      data['asm_group_id'] = @asm_group_id.to_i unless @asm_group_id.nil?
-      data['ip_pool'] = @ip_pool unless @ip_pool.nil?
-      str_each_at = []
-      @send_each_at.each do |val|
-        str_each_at.push(val.to_i)
+
+      headers = ['to', 'sub', 'section', 'unique_args', 'category', 'filters', 'ip_pool']
+      headers.each do |header|
+        data[header] = instance_variable_get("@#{header}")
       end
-      data['send_each_at'] = str_each_at if str_each_at.length > 0
-      data
+
+      data['send_at'] = @send_at&.to_i
+      data['asm_group_id'] = @asm_group_id&.to_i
+      data['send_each_at'] = @send_each_at.map(&:to_i)
+
+      data.reject { |_, val| valid_value?(val) }
     end
 
     protected :to_array
@@ -138,19 +134,36 @@ module Smtpapi
     def json_string
       escape_unicode(to_array.to_json)
     end
-    alias_method :to_json, :json_string
+
+    alias :to_json :json_string
 
     def escape_unicode(str)
-      str.unpack('U*').map do |i|
-        if i > 65_535
-          "\\u#{format('%04x', ((i - 0x10000) / 0x400 + 0xD800))}"\
-          "\\u#{format('%04x', ((i - 0x10000) % 0x400 + 0xDC00))}" if i > 65_535
-        elsif i > 127
-          "\\u#{format('%04x', i)}"
-        else
-          i.chr('UTF-8')
-        end
-      end.join
+      str.unpack('U*').map { |i| format_char(i) }.join
+    end
+
+    private
+
+    def format_char(ch)
+      if ch > 65_535
+        "\\u#{unicode_char(ch, 1)}\\u#{unicode_char(ch, 2)}"
+      elsif ch > 127
+        "\\u#{unicode_char(ch, 3)}"
+      else
+        ch.chr('UTF-8')
+      end
+    end
+
+    def unicode_char(ch, n)
+      if n == 1
+        ch = (ch - 0x10000) / 0x400 + 0xD800
+      elsif n == 2
+        ch = (ch - 0x10000) % 0x400 + 0xDC00
+      end
+      format('%04x', ch)
+    end
+
+    def valid_value?(val)
+      val.nil? || ( !val.is_a?(Fixnum) && val.empty? )
     end
   end
 end
