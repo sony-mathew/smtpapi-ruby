@@ -1,5 +1,3 @@
-# -*- encoding: utf-8 -*-
-
 $LOAD_PATH.unshift File.dirname(__FILE__)
 require 'smtpapi/version'
 require 'json'
@@ -117,7 +115,7 @@ module Smtpapi
 
     def to_array
       data = {}
-
+      
       headers = %w[to sub section unique_args category filters ip_pool]
       headers.each do |header|
         data[header] = instance_variable_get("@#{header}")
