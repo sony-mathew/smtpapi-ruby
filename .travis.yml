@@ -7,10 +7,9 @@ rvm:
   - 2.4
   - jruby-9.2
 before_script:
-  - bundle install
+  - make install
 script:
-  - rubocop --fail-level=W
-  - rake test
+  - make test
 matrix:
   allow_failures:
     - rvm: ruby-head
