@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+[2020-08-19] Version 0.1.8
+--------------------------
+**Library - Docs**
+- [PR #72](https://github.com/sendgrid/smtpapi-ruby/pull/72): Update *.md files using Grammarly. Thanks to [@anatolyyyyyy](https://github.com/anatolyyyyyy)!
+
+**Library - Chore**
+- [PR #96](https://github.com/sendgrid/smtpapi-ruby/pull/96): update GitHub branch references to use HEAD. Thanks to [@thinkingserious](https://github.com/thinkingserious)!
+
+
 [2020-08-05] Version 0.1.7
 --------------------------
 **Library - Chore**
