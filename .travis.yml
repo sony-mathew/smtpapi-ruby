@@ -16,8 +16,7 @@ matrix:
   fast_finish: true
 deploy:
   provider: rubygems
-  api_key:
-    secure: PRNz0pPyO99KdYcQ1WKkunc3TOz1N5ZmdT997KlzRYa5uos+IFqr5UsztJzOrus5iWoQdKKtLGSRYe1SFnXDkSOwK61Q5YvYdSqF3OE/QD63qHub+is4CxmfMmXg+eBGreSH+kIWlSD8N3ic2CDZR8JoQmhPcit6zCZSN3WVRfY=
+  api_key: $RUBYGEMS_API_KEY
   gem: smtpapi
   on:
     tags: true
@@ -30,5 +29,4 @@ notifications:
     on_pull_requests: false
     on_success: never
     on_failure: change
-    rooms:
-      - secure: kyDurUDtXcp+6SfpFeszmzRZEpl2IOFqevGelhKVfx7j+M+p1wvPCkv9vnSdpKaZbQ80EKORxS4ZsnKUL9/yOP2uF9mrzB/DCfzFynw/IVfBejM8nkbf/CmosFh0SkkLuwotaPeqMhAtg1J8Avk1HVKJmihaJfkD6kzQ3PSyKlw=
+    rooms: $SLACK_TOKEN
