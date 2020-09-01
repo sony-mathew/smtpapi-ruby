@@ -111,6 +111,26 @@ module Smtpapi
       self
     end
 
+    def json_string
+      escape_unicode(to_array.to_json)
+    end
+    alias_method :to_json, :json_string
+
+    def escape_unicode(str)
+      str.unpack('U*').map do |i|
+        if i > 65_535
+          "\\u#{format('%04x', ((i - 0x10000) / 0x400 + 0xD800))}" \
+          "\\u#{format('%04x', ((i - 0x10000) % 0x400 + 0xDC00))}"
+        elsif i > 127
+          "\\u#{format('%04x', i)}"
+        else
+          i.chr('UTF-8')
+        end
+      end.join
+    end
+
+    protected
+
     def to_array
       data = {}
       data['to'] = @to unless @to.empty?
@@ -131,27 +151,6 @@ module Smtpapi
       data['send_each_at'] = str_each_at unless str_each_at.empty?
 
       data
-    end
-
-    protected :to_array
-
-    def json_string
-      escape_unicode(to_array.to_json)
-    end
-
-    alias :to_json :json_string
-
-    def escape_unicode(str)
-      str.unpack('U*').map do |i|
-        if i > 65_535
-          "\\u#{format('%04x', ((i - 0x10000) / 0x400 + 0xD800))}" \
-          "\\u#{format('%04x', ((i - 0x10000) % 0x400 + 0xDC00))}"
-        elsif i > 127
-          "\\u#{format('%04x', i)}"
-        else
-          i.chr('UTF-8')
-        end
-      end.join
     end
   end
 end
