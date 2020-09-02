@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+[2020-09-02] Version 0.1.9
+--------------------------
+**Library - Chore**
+- [PR #71](https://github.com/sendgrid/smtpapi-ruby/pull/71): Conformance To Style Standards With RuboCop & TravisCI. Thanks to [@alanunruh](https://github.com/alanunruh)!
+
+
 [2020-08-19] Version 0.1.8
 --------------------------
 **Library - Docs**
