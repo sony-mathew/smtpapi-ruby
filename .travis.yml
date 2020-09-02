@@ -1,6 +1,5 @@
 language: ruby
 rvm:
-  - ruby-head
   - 2.7
   - 2.6
   - 2.5
@@ -10,10 +9,6 @@ before_script:
   - make install
 script:
   - make test
-matrix:
-  allow_failures:
-    - rvm: ruby-head
-  fast_finish: true
 deploy:
   provider: rubygems
   api_key: $RUBYGEMS_API_KEY
