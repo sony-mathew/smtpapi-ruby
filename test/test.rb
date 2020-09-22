@@ -1,3 +1,4 @@
+require 'test_helper'
 require 'test/unit'
 require './lib/smtpapi'
 
@@ -6,7 +7,7 @@ require './lib/smtpapi'
 #
 class SmtpapiTest < Test::Unit::TestCase
   def test_version
-    assert_equal('0.1.0', Smtpapi::VERSION)
+    assert_equal('0.1.9', Smtpapi::VERSION)
   end
 
   def test_empty
@@ -246,7 +247,7 @@ class SmtpapiTest < Test::Unit::TestCase
   end
 
   def test_issue_template_exists
-    assert(File.file?('./.github/ISSUE_TEMPLATE'))
+    assert(File.file?('./ISSUE_TEMPLATE.md'))
   end
 
   def test_license_exists
@@ -254,7 +255,7 @@ class SmtpapiTest < Test::Unit::TestCase
   end
 
   def test_pull_request_template_exists
-    assert(File.file?('./.github/PULL_REQUEST_TEMPLATE'))
+    assert(File.file?('./PULL_REQUEST_TEMPLATE.md'))
   end
 
   def test_readme_exists
@@ -274,11 +275,11 @@ class SmtpapiTest < Test::Unit::TestCase
   # end
 
   def test_license_date_is_updated
-    license_end_year = IO.read('LICENSE.txt').match(
-      /Copyright \(c\) \d{4}-(\d{4}) SendGrid/
+    license_year = IO.read('LICENSE.md').match(
+      /Copyright \(C\) (\d{4}), Twilio SendGrid/
     )[1]
     current_year = Time.new.year
 
-    assert_equal(current_year, license_end_year.to_i)
+    assert_equal(current_year, license_year.to_i)
   end
 end

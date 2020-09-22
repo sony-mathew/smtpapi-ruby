@@ -16,10 +16,6 @@ ParameterLists:
 AbcSize:
   Max: 34
 
-# Increase max number of "/" in %r
-RegexpLiteral:
-  MaxSlashes: 0
-
 # Increase the max line number of class
 ClassLength:
   Max: 250
@@ -30,3 +26,6 @@ CyclomaticComplexity:
 
 PerceivedComplexity:
   Max: 11
+
+Metrics/LineLength:
+  Max: 100

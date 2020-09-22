@@ -81,9 +81,7 @@ module Smtpapi
 
     def add_filter(filter_name, parameter_name, parameter_value)
       @filters[filter_name] = {} if @filters[filter_name].nil?
-      if @filters[filter_name]['settings'].nil?
-        @filters[filter_name]['settings'] = {}
-      end
+      @filters[filter_name]['settings'] = {} if @filters[filter_name]['settings'].nil?
       @filters[filter_name]['settings'][parameter_name] = parameter_value
       self
     end
@@ -113,6 +111,17 @@ module Smtpapi
       self
     end
 
+    def json_string
+      escape_unicode(to_array.to_json)
+    end
+    alias_method :to_json, :json_string
+
+    def escape_unicode(str)
+      str.unpack('U*').map { |i| format_char(i) }.join
+    end
+
+    protected
+
     def to_array
       data = {}
       
@@ -126,18 +135,6 @@ module Smtpapi
       data['send_each_at'] = @send_each_at.map(&:to_i)
 
       data.reject { |_, val| valid_value?(val) }
-    end
-
-    protected :to_array
-
-    def json_string
-      escape_unicode(to_array.to_json)
-    end
-
-    alias to_json json_string
-
-    def escape_unicode(str)
-      str.unpack('U*').map { |i| format_char(i) }.join
     end
 
     private
