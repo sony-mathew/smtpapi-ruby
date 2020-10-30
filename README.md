@@ -1,6 +1,6 @@
 ![SendGrid Logo](twilio_sendgrid_logo.png)
 
-[![Build Status](https://travis-ci.org/sendgrid/smtpapi-ruby.svg?branch=main)](https://travis-ci.org/SendGrid/smtpapi-ruby)
+[![Build Status](https://travis-ci.com/sendgrid/smtpapi-ruby.svg?branch=main)](https://travis-ci.com/sendgrid/smtpapi-ruby)
 [![Gem Version](https://badge.fury.io/rb/smtpapi.svg)](https://badge.fury.io/rb/smtpapi)
 [![Email Notifications Badge](https://dx.sendgrid.com/badge/ruby)](https://dx.sendgrid.com/newsletter/ruby)
 [![Gem Version](https://badge.fury.io/rb/sendgrid-ruby.svg)](https://badge.fury.io/rb/sendgrid-ruby)
